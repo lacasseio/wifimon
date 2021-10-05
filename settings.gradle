@@ -1,0 +1,43 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = "Nokee Release Repository"
+            url = uri("https://repo.nokee.dev/release")
+            mavenContent {
+                includeGroupByRegex("dev\\.nokee.*")
+                includeGroupByRegex("dev\\.gradleplugins.*")
+            }
+        }
+        maven {
+            name = "Nokee Snapshot Repository"
+            url = uri("https://repo.nokee.dev/snapshot")
+            mavenContent {
+                includeGroupByRegex("dev\\.nokee.*")
+                includeGroupByRegex("dev\\.gradleplugins.*")
+            }
+        }
+        gradlePluginPortal()
+    }
+    def nokeeVersion = "0.4.479-202110050928.48a563d9"  // found on https://services.nokee.dev/versions/all.json
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id.startsWith("dev.nokee.")) {
+                useModule("${requested.id.id}:${requested.id.id}.gradle.plugin:${nokeeVersion}")
+            }
+        }
+    }
+}
+
+rootProject.name = "wifimon"
+
+includeBuild 'gradle/plugins' // Import support plugins
+
+// Declare source dependency
+sourceControl {
+    gitRepository(uri("https://github.com/vapor/console-kit")) {
+        producesModule("ConsoleKit:ConsoleKit") // Express the Group-Artifact coordinate produced
+        plugins {
+            id "dev.nokee.sample.console-kit-build-adapter" // inject build adapter plugin
+        }
+    }
+}

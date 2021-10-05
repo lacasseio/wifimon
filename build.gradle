@@ -1,0 +1,17 @@
+plugins {
+    id("dev.nokee.swift-application")
+}
+
+application {
+    targetMachines.add(machines.macOS.x86_64)
+    
+    swiftSources.from(file("Sources/wifimon"))
+}
+
+dependencies {
+    implementation("ConsoleKit:ConsoleKit") {
+        version {
+            branch = "main"
+        }
+    }
+}

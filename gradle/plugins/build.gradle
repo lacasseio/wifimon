@@ -1,0 +1,13 @@
+plugins {
+    id "groovy-gradle-plugin"
+}
+
+gradlePlugin {
+	plugins {
+		swiftPmBuildAdapter {
+			id = 'dev.nokee.sample.console-kit-build-adapter'
+			implementationClass = 'dev.nokee.sample.ConsoleKitBuildAdapterPlugin'
+		}
+	}
+}
+
